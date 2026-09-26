@@ -1602,5 +1602,3 @@ RAG
 ```text
 Build → Understand → Optimize → Deploy
 ```
-
-نه فقط استفاده از Qdrant، بلکه درک کامل معماری Vector Search و استفاده از آن در پروژه‌های واقعی AI.
