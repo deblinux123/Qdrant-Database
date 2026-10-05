@@ -118,6 +118,7 @@ func main() {
 	filter := &qdrant.Filter{
 		Must: []*qdrant.Condition{
 			qdrant.NewMatch("language", "fa"),
+			qdrant.NewMatch("category", "AI"),
 		},
 	}
 
