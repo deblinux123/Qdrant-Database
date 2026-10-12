@@ -65,6 +65,27 @@ func (s QdrantService) CreateCollection(ctx context.Context) error {
 	return nil
 }
 
+func (s QdrantService) Search(ctx context.Context, vector []float32, limit uint64) ([]*qdrant.ScoredPoint, error) {
+	points, err := s.Client.Query(
+		ctx,
+		&qdrant.QueryPoints{
+			CollectionName: s.Collection,
+			Query:          qdrant.NewQuery(vector...),
+			Limit:          &limit,
+			WithPayload:    qdrant.NewWithPayload(true),
+		},
+	)
+
+	if err != nil {
+		return nil, fmt.Errorf(
+			"failed to search points: %w",
+			err,
+		)
+	}
+
+	return points, nil
+}
+
 func (s QdrantService) Close() error {
 	return s.Client.Close()
 }
