@@ -1,9 +1,11 @@
 package main
 
 import (
-	"day-13/config"
+	"context"
 	"log"
 
+	"github.com/deblinux123/Qdrant-Database/day-13/config"
+	"github.com/deblinux123/Qdrant-Database/day-13/ragservice"
 	"github.com/gofiber/fiber/v2"
 	"github.com/joho/godotenv"
 )
@@ -15,6 +17,21 @@ func main() {
 	}
 
 	cfg := config.Load()
+	ctx := context.Background()
+
+	qdrantClient, err := ragservice.NewClient("papers")
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	defer qdrantClient.Close()
+
+	err = qdrantClient.CreateCollection(ctx)
+
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	app := fiber.New()
 
